@@ -1,0 +1,10 @@
+- name: NSCD Service | Install
+  yum:
+    name: nscd
+    state: present 
+
+- name: NSCD Service | Start
+  service:
+    name: nscd
+    state: started 
+    enabled: yes

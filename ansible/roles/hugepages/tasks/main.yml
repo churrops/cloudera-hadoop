@@ -1,0 +1,16 @@
+- name: Transparent HugePage 
+  lineinfile:
+    path: /etc/rc.d/rc.local
+    state: present
+    line: '{{ item }}'
+    insertbefore: '^touch /var/lock/subsys/local'
+  with_items:
+    - "echo never > /sys/kernel/mm/transparent_hugepage/defrag"
+    - "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
+
+- name: Transparent HugePages | Set X permission for /etc/rc.d/rc.local
+  file: 
+    name: /etc/rc.d/rc.local 
+    mode: 0755
+    owner: root
+    group: root

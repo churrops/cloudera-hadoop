@@ -1,0 +1,12 @@
+---
+- name: Common tasks for all hosts
+  hosts: all
+
+  roles:
+    - roles/limits
+    - roles/sysctl
+    - roles/hugepages
+    - roles/tuned
+    - roles/selinux
+    - roles/nscd
+    - roles/firewalld
