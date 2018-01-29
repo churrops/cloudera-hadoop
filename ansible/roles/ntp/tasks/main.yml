@@ -1,0 +1,14 @@
+---
+- name: NTP | Install ntp package
+  yum:
+    name: ntp
+    state: present
+  tags: ntp
+
+- name: NTP | Enable and start service
+  service: 
+    name: ntpd 
+    state: started
+    enabled: yes
+  tags: ntp
+

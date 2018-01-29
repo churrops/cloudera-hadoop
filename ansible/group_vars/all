@@ -1,0 +1,12 @@
+#
+jdk_version: "8u131"
+jdk_package: "jdk-{{jdk_version}}-linux-x64.rpm"
+jdk_get_url: "http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm"
+jdk_headers: "Cookie:oraclelicense=accept-securebackup-cookie"
+jdk_name: /usr/java/jdk1.8.0_131
+
+mysql_connector_version: "5.1.42"
+mysql_connector_package: "mysql-connector-java-{{mysql_connector_version}}.tar.gz"
+mysql_connector_get_url: "https://dev.mysql.com/get/Downloads/Connector-J/{{mysql_connector_package}}"
+mysql_connector_dir: "/usr/share/java"
+mysql_connector_jar: "mysql-connector-java-{{mysql_connector_version}}-bin.jar"

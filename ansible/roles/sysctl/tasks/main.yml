@@ -1,7 +1,0 @@
-- name: System Preparation | /etc/sysctl.conf
-  sysctl: name={{ item.name }} value={{ item.value }} state=present sysctl_set=yes
-  with_items:
-    - {name: vm.swappiness,     value: 1     }
-    - {name: vm.max_map_count,  value: 262144}
-    - {name: fs.file-max,       value: 262144}
-  tags: sysctl

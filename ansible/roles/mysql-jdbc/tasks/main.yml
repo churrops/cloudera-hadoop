@@ -1,0 +1,44 @@
+---
+- name: download package
+  get_url:
+    url: "{{mysql_connector_get_url}}"
+    dest: "/tmp/{{mysql_connector_package}}"
+  tags: hswong3i.mysql_connector_java
+
+- name: unarchive package
+  shell: |
+    TMP_DIR=`mktemp -d`
+    tar zxvf /tmp/{{ mysql_connector_java_archive }} -C $TMP_DIR --strip-components=1
+    cp $TMP_DIR/{{ mysql_connector_java_jar }} {{ mysql_connector_java_dest }}/{{ mysql_connector_java_jar }}
+    chown {{ mysql_connector_java_user }}:{{ mysql_connector_java_user }} {{ mysql_connector_java_dest }}/{{ mysql_connector_java_jar }}
+  args:
+    creates: "{{ mysql_connector_java_dest }}/{{ mysql_connector_java_jar }}"
+  tags: hswong3i.mysql_connector_java
+
+
+name: 
+  file: 
+    path: /usr/share/java/ 
+    state: directory
+
+- name: Unarchive a file that needs to be downloaded (added in 2.0)
+  unarchive:
+    src: https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.42.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: 
+  copy: 
+    
+    remote_src: no
+
+~# cp mysql-connector-java-5.1.42/mysql-connector-java-5.1.42-bin.jar /usr/share/java/
+
+name: 
+  file:
+    src: /usr/share/java/mysql-connector-java-5.1.42-bin.jar
+    dest: /usr/share/java/mysql-connector-java.jar
+    state: link
+
+
+~# rm -rfv mysql-connector-java-5.1.42

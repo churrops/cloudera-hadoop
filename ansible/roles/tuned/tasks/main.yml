@@ -1,5 +1,0 @@
-- name: Tuned Service | Disable
-  service:
-    name: tuned
-    state: stopped
-    enabled: no 

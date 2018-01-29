@@ -1,0 +1,48 @@
+---
+- name: Setup | SELinux | Disable
+  selinux: state=disabled
+  tags: requirements 
+
+- name: Setup | SELinux | setenforce 0
+  command: "setenforce 0"
+  ignore_errors: true
+  changed_when: false
+  tags: requirements
+
+- name: Setup | Firewalld | Stop and disable firewalld
+  service: name=firewalld state=stopped enabled=no
+  ignore_errors: true
+  tags: requirements
+
+- name: Setup | NSCD | install package
+  yum: name=nscd state=present 
+  tags: requirements
+
+- name: Setup | NSCD | start and enable service
+  service: name=nscd state=started enabled=yes
+  tags: requirements
+
+- name: Setup | Sysctl | /etc/sysctl.conf
+  sysctl: name={{ item.name }} value={{ item.value }} state=present sysctl_set=yes
+  with_items:
+    - {name: vm.swappiness,     value: 1     }
+    - {name: vm.max_map_count,  value: 262144}
+    - {name: fs.file-max,       value: 262144}
+  tags: requirements
+
+- name: Setup | Tuned | disable service
+  service: name=tuned state=stopped enabled=no 
+  tags: requirements
+
+- name: Setup | Security | /etc/security/limits.conf
+  pam_limits:
+    domain: "{{item.domain}}"
+    limit_type: "{{item.limit_type}}"
+    limit_item: "{{item.limit_item}}"
+    value: "{{item.value}}"
+  with_items:
+    - {domain: "*", limit_type: soft, limit_item: nofile, value: 64000 }
+    - {domain: "*", limit_type: soft, limit_item: nproc,  value: 64000 }
+    - {domain: "*", limit_type: hard, limit_item: nofile, value: 64000 }
+    - {domain: "*", limit_type: hard, limit_item: nproc,  value: 64000 }
+  tags: limits
